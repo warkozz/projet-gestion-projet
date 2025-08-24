@@ -8,7 +8,15 @@ class UtilisateurController {
         $stmt = $pdo->query('SELECT * FROM Utilisateur');
         $users = [];
         while ($row = $stmt->fetch()) {
-            $users[] = new Utilisateur($row['id'], $row['nom'], $row['prenom'], $row['email'], $row['mot_de_passe'], $row['role']);
+            $users[] = new Utilisateur(
+                $row['id'],
+                $row['nom'],
+                $row['prenom'],
+                $row['email'],
+                $row['mot_de_passe'],
+                $row['role'],
+                isset($row['departement_id']) ? $row['departement_id'] : null
+            );
         }
         return $users;
     }

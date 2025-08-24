@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($mot_de_passe, $user['mot_de_passe'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role'];
-        header('Location: ../index.php');
+        header('Location: ../dashboard.php');
         exit;
     } else {
         $error = 'Email ou mot de passe incorrect.';

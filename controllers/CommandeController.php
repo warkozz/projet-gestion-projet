@@ -1,7 +1,8 @@
 <?php
-require_once 'modele/DAO.php';
+require_once __DIR__.'/../config/db.php';
+require_once __DIR__.'/../models/Commande.php';
 
-class Commande {
+class CommandeController {
     private $id;
     private $client_id;
     private $date_commande;
@@ -18,5 +19,13 @@ class Commande {
         $stmt->execute([$client_id, $date_commande]);
     }
 
-    // ...existing methods...
+    public static function getAll() {
+        global $pdo;
+        $stmt = $pdo->query('SELECT * FROM Commande');
+        $commandes = [];
+        while ($row = $stmt->fetch()) {
+            $commandes[] = new Commande($row['id'], $row['client_id'], $row['date_commande']);
+        }
+        return $commandes;
+    }
 }

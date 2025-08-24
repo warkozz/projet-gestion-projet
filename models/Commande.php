@@ -1,4 +1,5 @@
 <?php
+if (!class_exists('Commande')) {
 class Commande {
     public $id;
     public $client_id;
@@ -8,4 +9,5 @@ class Commande {
         $this->client_id = $client_id;
         $this->date_commande = $date_commande;
     }
+}
 }

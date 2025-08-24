@@ -1,12 +1,12 @@
 <?php
-require_once '../controllers/ClientController.php';
-$clients = ClientController::getAll();
+require_once '../controllers/ProduitController.php';
+$produits = ProduitController::getAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des clients</title>
+    <title>Liste des produits</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
@@ -79,39 +79,37 @@ $clients = ClientController::getAll();
             <a class="nav-link" href="../dashboard.php"><i class="bi bi-grid-1x2-fill"></i>Tableau de bord</a>
             <a class="nav-link" href="projets.php"><i class="bi bi-folder2-open"></i>Projets</a>
             <a class="nav-link" href="employes.php"><i class="bi bi-people"></i>Employés</a>
-            <a class="nav-link active" href="clients.php"><i class="bi bi-person-badge"></i>Clients & Commandes</a>
-            <a class="nav-link" href="produits.php"><i class="bi bi-box-seam"></i>Produits & Catégories</a>
+            <a class="nav-link" href="clients.php"><i class="bi bi-person-badge"></i>Clients & Commandes</a>
+            <a class="nav-link active" href="produits.php"><i class="bi bi-box-seam"></i>Produits & Catégories</a>
             <a class="nav-link" href="factures.php"><i class="bi bi-receipt"></i>Factures</a>
             <a class="nav-link mt-2" href="../auth/logout.php"><i class="bi bi-box-arrow-right"></i>Déconnexion</a>
         </nav>
     </div>
     <!-- Header -->
     <div class="header">
-        <span class="fw-bold fs-4">Clients</span>
+        <span class="fw-bold fs-4">Produits</span>
         <i class="bi bi-person fs-3"></i>
     </div>
     <!-- Main Content -->
     <div class="main-content container-fluid">
-        <h2 class="mb-4">Liste des clients</h2>
-        <a href="ajout_client.php" class="btn btn-primary mb-3"><i class="bi bi-person-plus"></i> Ajouter un client</a>
+        <h2 class="mb-4">Liste des produits</h2>
+        <a href="ajout_produit.php" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Ajouter un produit</a>
         <div class="card shadow-sm">
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead class="table-light">
                         <tr>
-                            <th>ID</th>
                             <th>Nom</th>
-                            <th>Email</th>
-                            <th>Adresse</th>
+                            <th>Prix</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($clients as $client): ?>
+                        <?php foreach ($produits as $produit): ?>
                         <tr>
-                            <td><?= htmlspecialchars($client->id) ?></td>
-                            <td><?= htmlspecialchars($client->nom) ?></td>
-                            <td><?= htmlspecialchars($client->email) ?></td>
-                            <td><?= htmlspecialchars($client->adresse) ?></td>
+                            <td><?= htmlspecialchars($produit->nom) ?></td>
+                            <td><?= htmlspecialchars($produit->prix) ?></td>
+                            <td><?= htmlspecialchars($produit->description) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
