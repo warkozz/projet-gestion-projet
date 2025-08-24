@@ -12,5 +12,11 @@ class FactureController {
         }
         return $factures;
     }
+
+    public static function create($commande_id, $date_facture, $total) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Facture (commande_id, date_facture, total) VALUES (?, ?, ?)');
+        $stmt->execute([$commande_id, $date_facture, $total]);
+    }
     // Ajoutez ici les méthodes CRUD
 }

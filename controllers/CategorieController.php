@@ -12,5 +12,11 @@ class CategorieController {
         }
         return $categories;
     }
+
+    public static function create($nom) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Categorie (nom) VALUES (?)');
+        $stmt->execute([$nom]);
+    }
     // Ajoutez ici les méthodes CRUD
 }

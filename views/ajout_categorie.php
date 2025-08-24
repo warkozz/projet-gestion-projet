@@ -1,17 +1,23 @@
 <?php
-session_start();
+require_once '../controllers/CategorieController.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom = $_POST['nom'];
+    CategorieController::create($nom);
+    header('Location: categories.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil - Gestion de Projets</title>
+    <title>Ajouter une catégorie</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body class="container mt-5">
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Menu principal</a>
+            <a class="navbar-brand" href="../index.php">Menu principal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -20,58 +26,51 @@ session_start();
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="projetsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projets</a>
                         <ul class="dropdown-menu" aria-labelledby="projetsDropdown">
-                            <li><a class="dropdown-item" href="views/projets.php">Liste des projets</a></li>
-                            <li><a class="dropdown-item" href="views/ajout_projet.php">Ajouter un projet</a></li>
+                            <li><a class="dropdown-item" href="ajout_projet.php">Ajouter un projet</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="clientsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clients</a>
                         <ul class="dropdown-menu" aria-labelledby="clientsDropdown">
-                            <li><a class="dropdown-item" href="views/clients.php">Liste des clients</a></li>
-                            <li><a class="dropdown-item" href="views/ajout_client.php">Ajouter un client</a></li>
+                            <li><a class="dropdown-item" href="ajout_client.php">Ajouter un client</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="produitsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produits</a>
                         <ul class="dropdown-menu" aria-labelledby="produitsDropdown">
-                            <li><a class="dropdown-item" href="views/ajout_produit.php">Ajouter un produit</a></li>
+                            <li><a class="dropdown-item" href="ajout_produit.php">Ajouter un produit</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catégories</a>
                         <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                            <li><a class="dropdown-item" href="views/ajout_categorie.php">Ajouter une catégorie</a></li>
+                            <li><a class="dropdown-item active" href="ajout_categorie.php">Ajouter une catégorie</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="commandesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Commandes</a>
                         <ul class="dropdown-menu" aria-labelledby="commandesDropdown">
-                            <li><a class="dropdown-item" href="views/ajout_commande.php">Ajouter une commande</a></li>
+                            <li><a class="dropdown-item" href="ajout_commande.php">Ajouter une commande</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="facturesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Factures</a>
                         <ul class="dropdown-menu" aria-labelledby="facturesDropdown">
-                            <li><a class="dropdown-item" href="views/ajout_facture.php">Ajouter une facture</a></li>
+                            <li><a class="dropdown-item" href="ajout_facture.php">Ajouter une facture</a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item"><span class="nav-link">Connecté en tant que <strong><?= $_SESSION['role'] ?></strong></span></li>
-                        <li class="nav-item"><a href="auth/logout.php" class="nav-link">Déconnexion</a></li>
-                    <?php else: ?>
-                        <li class="nav-item"><a href="views/login.php" class="nav-link">Connexion</a></li>
-                        <li class="nav-item"><a href="views/register.php" class="nav-link">Inscription</a></li>
-                    <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="text-center">
-        <h1>Bienvenue sur le système de gestion de projets</h1>
-        <p class="lead">Utilisez le menu ci-dessus pour naviguer entre les différentes catégories.</p>
-    </div>
+    <h2>Ajouter une catégorie</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label>Nom</label>
+            <input type="text" name="nom" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Créer la catégorie</button>
+    </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

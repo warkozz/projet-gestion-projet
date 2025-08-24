@@ -12,5 +12,11 @@ class ProjetController {
         }
         return $projets;
     }
+
+    public static function create($nom, $description, $date_debut, $date_fin, $chef_de_projet_id) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Projet (nom, description, date_debut, date_fin, chef_de_projet_id) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$nom, $description, $date_debut, $date_fin, $chef_de_projet_id]);
+    }
     // Ajoutez ici les méthodes CRUD
 }

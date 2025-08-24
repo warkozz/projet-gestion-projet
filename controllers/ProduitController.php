@@ -12,5 +12,11 @@ class ProduitController {
         }
         return $produits;
     }
+
+    public static function create($nom, $prix, $description) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Produit (nom, prix, description) VALUES (?, ?, ?)');
+        $stmt->execute([$nom, $prix, $description]);
+    }
     // Ajoutez ici les méthodes CRUD
 }

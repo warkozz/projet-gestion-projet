@@ -12,5 +12,11 @@ class ClientController {
         }
         return $clients;
     }
+
+    public static function create($nom, $email, $adresse) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Client (nom, email, adresse) VALUES (?, ?, ?)');
+        $stmt->execute([$nom, $email, $adresse]);
+    }
     // Ajoutez ici les méthodes CRUD
 }

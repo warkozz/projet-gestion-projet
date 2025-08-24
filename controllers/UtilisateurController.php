@@ -12,5 +12,10 @@ class UtilisateurController {
         }
         return $users;
     }
-    // Ajoutez ici les méthodes CRUD (create, update, delete)
+    public static function create($nom, $prenom, $email, $mot_de_passe, $role, $departement_id = null) {
+        global $pdo;
+        $stmt = $pdo->prepare('INSERT INTO Utilisateur (nom, prenom, email, mot_de_passe, role, departement_id) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$nom, $prenom, $email, $mot_de_passe, $role, $departement_id]);
+    }
+    // Ajoutez ici les méthodes CRUD (update, delete)
 }
