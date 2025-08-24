@@ -95,7 +95,10 @@ $clients = ClientController::getAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($clients as $client): ?>
+                        <?php
+                        require_once '../controllers/CommandeController.php';
+                        $commandes = CommandeController::getAll();
+                        foreach ($clients as $client): ?>
                         <tr>
                             <td><?= htmlspecialchars($client->id) ?></td>
                             <td><?= htmlspecialchars($client->nom) ?></td>
@@ -104,6 +107,21 @@ $clients = ClientController::getAll();
                             <td>
                                 <a href="edit_client.php?id=<?= $client->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
                                 <a href="delete_client.php?id=<?= $client->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce client ?')"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="bg-light">
+                                <strong>Commandes du client :</strong>
+                                <ul class="list-group list-group-flush">
+                                <?php foreach ($commandes as $commande): ?>
+                                    <?php if ($commande->client_id == $client->id): ?>
+                                        <li class="list-group-item">
+                                            Commande #<?= htmlspecialchars($commande->id) ?> - Date : <?= htmlspecialchars($commande->date_commande) ?>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                </ul>
+                                <a href="ajout_commande.php?client_id=<?= $client->id ?>" class="btn btn-outline-primary btn-sm mt-2"><i class="bi bi-plus"></i> Ajouter une commande</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

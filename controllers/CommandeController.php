@@ -28,4 +28,9 @@ class CommandeController {
         }
         return $commandes;
     }
+
+    // Pour compatibilité avec ajout_facture.php
+    public static function getAllCommandes() {
+        return self::getAll();
+    }
 }
