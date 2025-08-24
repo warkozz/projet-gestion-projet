@@ -124,7 +124,6 @@ $employes = UtilisateurController::getAll();
                                     elseif ($employe->departement_id == 2) $depNom = 'Marseille';
                                     elseif ($employe->departement_id == 3) $depNom = 'Lyon';
                                     else {
-                                        // Recherche dans la table Departement
                                         $depObj = DepartementController::getAll();
                                         foreach ($depObj as $dep) {
                                             if ($dep->id == $employe->departement_id) {
@@ -138,6 +137,10 @@ $employes = UtilisateurController::getAll();
                                 ?>
                             </td>
                             <td><?= htmlspecialchars($employe->role) ?></td>
+                            <td>
+                                <a href="edit_employe.php?id=<?= $employe->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="delete_employe.php?id=<?= $employe->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cet employé ?')"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

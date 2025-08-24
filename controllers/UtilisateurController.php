@@ -25,5 +25,15 @@ class UtilisateurController {
         $stmt = $pdo->prepare('INSERT INTO Utilisateur (nom, prenom, email, mot_de_passe, role, departement_id) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt->execute([$nom, $prenom, $email, $mot_de_passe, $role, $departement_id]);
     }
-    // Ajoutez ici les méthodes CRUD (update, delete)
+    public static function update($id, $nom, $prenom, $email, $mot_de_passe, $role, $departement_id = null) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Utilisateur SET nom = ?, prenom = ?, email = ?, mot_de_passe = ?, role = ?, departement_id = ? WHERE id = ?');
+        $stmt->execute([$nom, $prenom, $email, $mot_de_passe, $role, $departement_id, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Utilisateur WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

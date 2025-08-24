@@ -18,5 +18,15 @@ class FactureController {
         $stmt = $pdo->prepare('INSERT INTO Facture (commande_id, date_facture, total) VALUES (?, ?, ?)');
         $stmt->execute([$commande_id, $date_facture, $total]);
     }
-    // Ajoutez ici les méthodes CRUD
+    public static function update($id, $commande_id, $date_facture, $total) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Facture SET commande_id = ?, date_facture = ?, total = ? WHERE id = ?');
+        $stmt->execute([$commande_id, $date_facture, $total, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Facture WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

@@ -18,5 +18,15 @@ class ClientController {
         $stmt = $pdo->prepare('INSERT INTO Client (nom, email, adresse) VALUES (?, ?, ?)');
         $stmt->execute([$nom, $email, $adresse]);
     }
-    // Ajoutez ici les méthodes CRUD
+    public static function update($id, $nom, $email, $adresse) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Client SET nom = ?, email = ?, adresse = ? WHERE id = ?');
+        $stmt->execute([$nom, $email, $adresse, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Client WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

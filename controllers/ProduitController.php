@@ -18,5 +18,15 @@ class ProduitController {
         $stmt = $pdo->prepare('INSERT INTO Produit (nom, prix, description) VALUES (?, ?, ?)');
         $stmt->execute([$nom, $prix, $description]);
     }
-    // Ajoutez ici les méthodes CRUD
+    public static function update($id, $nom, $prix, $description) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Produit SET nom = ?, prix = ?, description = ? WHERE id = ?');
+        $stmt->execute([$nom, $prix, $description, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Produit WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

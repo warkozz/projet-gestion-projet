@@ -116,6 +116,10 @@ $projets = ProjetController::getAll();
                             <td><?= htmlspecialchars($projet->date_debut) ?></td>
                             <td><?= htmlspecialchars($projet->date_fin) ?></td>
                             <td><?= htmlspecialchars($projet->chef_de_projet_id) ?></td>
+                            <td>
+                                <a href="edit_projet.php?id=<?= $projet->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="delete_projet.php?id=<?= $projet->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce projet ?')"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

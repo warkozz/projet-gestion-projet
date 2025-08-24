@@ -114,6 +114,10 @@ $factures = FactureController::getAll();
                             <td><?= htmlspecialchars($facture->date_facture) ?></td>
                             <td><?= htmlspecialchars($facture->total) ?></td>
                             <td><?= htmlspecialchars($facture->client_id ?? '') ?></td>
+                            <td>
+                                <a href="edit_facture.php?id=<?= $facture->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="delete_facture.php?id=<?= $facture->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette facture ?')"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

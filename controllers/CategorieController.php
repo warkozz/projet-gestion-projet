@@ -18,5 +18,15 @@ class CategorieController {
         $stmt = $pdo->prepare('INSERT INTO Categorie (nom) VALUES (?)');
         $stmt->execute([$nom]);
     }
-    // Ajoutez ici les méthodes CRUD
+    public static function update($id, $nom) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Categorie SET nom = ? WHERE id = ?');
+        $stmt->execute([$nom, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Categorie WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

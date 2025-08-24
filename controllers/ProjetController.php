@@ -18,5 +18,15 @@ class ProjetController {
         $stmt = $pdo->prepare('INSERT INTO Projet (nom, description, date_debut, date_fin, chef_de_projet_id) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute([$nom, $description, $date_debut, $date_fin, $chef_de_projet_id]);
     }
-    // Ajoutez ici les méthodes CRUD
+    public static function update($id, $nom, $description, $date_debut, $date_fin, $chef_de_projet_id) {
+        global $pdo;
+        $stmt = $pdo->prepare('UPDATE Projet SET nom = ?, description = ?, date_debut = ?, date_fin = ?, chef_de_projet_id = ? WHERE id = ?');
+        $stmt->execute([$nom, $description, $date_debut, $date_fin, $chef_de_projet_id, $id]);
+    }
+
+    public static function delete($id) {
+        global $pdo;
+        $stmt = $pdo->prepare('DELETE FROM Projet WHERE id = ?');
+        $stmt->execute([$id]);
+    }
 }

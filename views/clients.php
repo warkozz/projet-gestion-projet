@@ -112,6 +112,10 @@ $clients = ClientController::getAll();
                             <td><?= htmlspecialchars($client->nom) ?></td>
                             <td><?= htmlspecialchars($client->email) ?></td>
                             <td><?= htmlspecialchars($client->adresse) ?></td>
+                            <td>
+                                <a href="edit_client.php?id=<?= $client->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="delete_client.php?id=<?= $client->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce client ?')"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

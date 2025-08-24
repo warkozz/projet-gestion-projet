@@ -102,6 +102,7 @@ $produits = ProduitController::getAll();
                             <th>Nom</th>
                             <th>Prix</th>
                             <th>Description</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,6 +111,10 @@ $produits = ProduitController::getAll();
                             <td><?= htmlspecialchars($produit->nom) ?></td>
                             <td><?= htmlspecialchars($produit->prix) ?></td>
                             <td><?= htmlspecialchars($produit->description) ?></td>
+                            <td>
+                                <a href="edit_produit.php?id=<?= $produit->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="delete_produit.php?id=<?= $produit->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce produit ?')"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
