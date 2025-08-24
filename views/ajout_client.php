@@ -28,18 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="sidebar d-flex flex-column p-3">
-                <h4 class="mb-4 d-flex align-items-center"><i class="bi bi-kanban me-2"></i>Projet de Gestion</h4>
-                <nav class="nav flex-column">
-                    <a class="nav-link" href="../dashboard.php"><i class="bi bi-grid-1x2-fill"></i>Tableau de bord</a>
-                    <a class="nav-link" href="projets.php"><i class="bi bi-folder2-open"></i>Projets</a>
-                    <a class="nav-link" href="employes.php"><i class="bi bi-people"></i>Employés</a>
-                    <a class="nav-link active" href="clients.php"><i class="bi bi-person-badge"></i>Clients & Commandes</a>
-                    <a class="nav-link" href="produits.php"><i class="bi bi-box-seam"></i>Produits & Catégories</a>
-                    <a class="nav-link" href="factures.php"><i class="bi bi-receipt"></i>Factures</a>
-                    <a class="nav-link mt-2" href="../auth/logout.php"><i class="bi bi-box-arrow-right"></i>Déconnexion</a>
-                </nav>
-            </div>
+            <?php include 'components/sidebar.php'; ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h2 class="h4">Ajouter un client</h2>
