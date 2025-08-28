@@ -97,7 +97,9 @@ $clients = ClientController::getAll();
                     <tbody>
                         <?php
                         require_once '../controllers/CommandeController.php';
+                        require_once '../controllers/FactureController.php';
                         $commandes = CommandeController::getAll();
+                        $factures = FactureController::getAll();
                         foreach ($clients as $client): ?>
                         <tr>
                             <td><?= htmlspecialchars($client->id) ?></td>
@@ -122,6 +124,19 @@ $clients = ClientController::getAll();
                                 <?php endforeach; ?>
                                 </ul>
                                 <a href="ajout_commande.php?client_id=<?= $client->id ?>" class="btn btn-outline-primary btn-sm mt-2"><i class="bi bi-plus"></i> Ajouter une commande</a>
+                                <br>
+                                <strong>Factures du client :</strong>
+                                <ul class="list-group list-group-flush">
+                                <?php foreach ($factures as $facture): ?>
+                                    <?php foreach ($commandes as $commande): ?>
+                                        <?php if ($commande->id == $facture->commande_id && $commande->client_id == $client->id): ?>
+                                            <li class="list-group-item">
+                                                Facture #<?= htmlspecialchars($facture->id) ?> - Total : <?= htmlspecialchars($facture->total) ?>€ - Date : <?= htmlspecialchars($facture->date_facture) ?>
+                                            </li>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+                                </ul>
                             </td>
                         </tr>
                         <?php endforeach; ?>

@@ -98,7 +98,10 @@ $employes = UtilisateurController::getAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($employes as $employe): ?>
+                        <?php
+                        require_once '../controllers/DepartementController.php';
+                        $departements = DepartementController::getAll();
+                        foreach ($employes as $employe): ?>
                         <tr>
                             <td><?= htmlspecialchars($employe->id) ?></td>
                             <td><?= htmlspecialchars($employe->nom) ?></td>
@@ -106,23 +109,14 @@ $employes = UtilisateurController::getAll();
                             <td><?= htmlspecialchars($employe->email) ?></td>
                             <td>
                                 <?php
-                                // Affichage du nom du département
-                                $depNom = '';
-                                if (!empty($employe->departement_id)) {
-                                    if ($employe->departement_id == 1) $depNom = 'Paris';
-                                    elseif ($employe->departement_id == 2) $depNom = 'Marseille';
-                                    elseif ($employe->departement_id == 3) $depNom = 'Lyon';
-                                    else {
-                                        $depObj = DepartementController::getAll();
-                                        foreach ($depObj as $dep) {
-                                            if ($dep->id == $employe->departement_id) {
-                                                $depNom = $dep->nom;
-                                                break;
-                                            }
-                                        }
+                                $depNom = 'Non défini';
+                                foreach ($departements as $dep) {
+                                    if ($dep->id == $employe->departement_id) {
+                                        $depNom = $dep->nom;
+                                        break;
                                     }
                                 }
-                                echo $depNom ?: 'Non défini';
+                                echo $depNom;
                                 ?>
                             </td>
                             <td><?= htmlspecialchars($employe->role) ?></td>

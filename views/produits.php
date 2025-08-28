@@ -1,6 +1,17 @@
 <?php
 require_once '../controllers/ProduitController.php';
+require_once '../controllers/CategorieController.php';
+require_once '../models/ProduitCategorie.php';
 $produits = ProduitController::getAll();
+$categories = CategorieController::getAll();
+
+// Récupérer les catégories associées à chaque produit
+global $pdo;
+$produitCategories = [];
+$stmt = $pdo->query('SELECT * FROM Produit_Categorie');
+while ($row = $stmt->fetch()) {
+    $produitCategories[$row['produit_id']][] = $row['categorie_id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -100,6 +111,21 @@ $produits = ProduitController::getAll();
                             <td><?= htmlspecialchars($produit->nom) ?></td>
                             <td><?= htmlspecialchars($produit->prix) ?></td>
                             <td><?= htmlspecialchars($produit->description) ?></td>
+                            <td>
+                                <?php 
+                                    if (isset($produitCategories[$produit->id])) {
+                                        foreach ($produitCategories[$produit->id] as $catId) {
+                                            foreach ($categories as $cat) {
+                                                if ($cat->id == $catId) {
+                                                    echo '<span class="badge bg-primary me-1">'.htmlspecialchars($cat->nom).'</span>';
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        echo '<span class="text-muted">Aucune catégorie</span>';
+                                    }
+                                ?>
+                            </td>
                             <td>
                                 <a href="edit_produit.php?id=<?= $produit->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
                                 <a href="delete_produit.php?id=<?= $produit->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce produit ?')"><i class="bi bi-trash"></i></a>

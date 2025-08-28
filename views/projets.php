@@ -97,14 +97,25 @@ $projets = ProjetController::getAll();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($projets as $projet): ?>
+                        <?php
+                        require_once '../controllers/UtilisateurController.php';
+                        $utilisateurs = UtilisateurController::getAll();
+                        foreach ($projets as $projet): ?>
                         <tr>
                             <td><?= htmlspecialchars($projet->id) ?></td>
                             <td><?= htmlspecialchars($projet->nom) ?></td>
                             <td><?= htmlspecialchars($projet->description) ?></td>
                             <td><?= htmlspecialchars($projet->date_debut) ?></td>
                             <td><?= htmlspecialchars($projet->date_fin) ?></td>
-                            <td><?= htmlspecialchars($projet->chef_de_projet_id) ?></td>
+                            <td>
+                                <?php
+                                foreach ($utilisateurs as $user) {
+                                    if ($user->id == $projet->chef_de_projet_id) {
+                                        echo htmlspecialchars($user->nom.' '.$user->prenom);
+                                    }
+                                }
+                                ?>
+                            </td>
                             <td>
                                 <a href="edit_projet.php?id=<?= $projet->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
                                 <a href="delete_projet.php?id=<?= $projet->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce projet ?')"><i class="bi bi-trash"></i></a>

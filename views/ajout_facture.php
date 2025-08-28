@@ -3,6 +3,16 @@
 require_once '../controllers/FactureController.php';
 require_once '../controllers/CommandeController.php';
 $commandes = CommandeController::getAllCommandes();
+
+// Traitement du formulaire d'ajout de facture
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $commande_id = $_POST['commande_id'];
+    $date_facture = $_POST['date_facture'];
+    $total = $_POST['total'];
+    FactureController::create($commande_id, $date_facture, $total);
+    header('Location: factures.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">

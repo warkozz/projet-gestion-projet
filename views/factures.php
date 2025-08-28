@@ -1,6 +1,38 @@
 <?php
 require_once '../controllers/FactureController.php';
+require_once '../controllers/CommandeController.php';
+require_once '../controllers/ClientController.php';
 $factures = FactureController::getAll();
+
+// Récupérer les commandes et clients pour affichage
+$commandes = [];
+$clients = [];
+foreach ($factures as $facture) {
+    // Récupérer la commande associée
+    if (!isset($commandes[$facture->commande_id])) {
+        $commande = null;
+        $allCommandes = CommandeController::getAll();
+        foreach ($allCommandes as $c) {
+            if ($c->id == $facture->commande_id) {
+                $commande = $c;
+                break;
+            }
+        }
+        $commandes[$facture->commande_id] = $commande;
+    }
+    // Récupérer le client associé à la commande
+    if ($commandes[$facture->commande_id] && !isset($clients[$commandes[$facture->commande_id]->client_id])) {
+        $client = null;
+        $allClients = ClientController::getAll();
+        foreach ($allClients as $cl) {
+            if ($cl->id == $commandes[$facture->commande_id]->client_id) {
+                $client = $cl;
+                break;
+            }
+        }
+        $clients[$commandes[$facture->commande_id]->client_id] = $client;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -99,10 +131,27 @@ $factures = FactureController::getAll();
                         <?php foreach ($factures as $facture): ?>
                         <tr>
                             <td><?= htmlspecialchars($facture->id) ?></td>
-                            <td><?= htmlspecialchars($facture->commande_id) ?></td>
+                            <td>
+                                <?php 
+                                    $commande = $commandes[$facture->commande_id] ?? null;
+                                    if ($commande) {
+                                        echo 'Commande #'.$commande->id.'<br>Date: '.htmlspecialchars($commande->date_commande);
+                                    } else {
+                                        echo htmlspecialchars($facture->commande_id);
+                                    }
+                                ?>
+                            </td>
                             <td><?= htmlspecialchars($facture->date_facture) ?></td>
                             <td><?= htmlspecialchars($facture->total) ?></td>
-                            <td><?= htmlspecialchars($facture->client_id ?? '') ?></td>
+                            <td>
+                                <?php 
+                                    $client = null;
+                                    if ($commande) {
+                                        $client = $clients[$commande->client_id] ?? null;
+                                    }
+                                    echo $client ? htmlspecialchars($client->nom).' ('.$client->email.')' : '';
+                                ?>
+                            </td>
                             <td>
                                 <a href="edit_facture.php?id=<?= $facture->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
                                 <a href="delete_facture.php?id=<?= $facture->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette facture ?')"><i class="bi bi-trash"></i></a>

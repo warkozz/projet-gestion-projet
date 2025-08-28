@@ -1,6 +1,17 @@
 <?php
 require_once '../controllers/CategorieController.php';
+require_once '../controllers/ProduitController.php';
+require_once '../models/ProduitCategorie.php';
 $categories = CategorieController::getAll();
+$produits = ProduitController::getAll();
+
+// Récupérer les produits associés à chaque catégorie
+global $pdo;
+$categorieProduits = [];
+$stmt = $pdo->query('SELECT * FROM Produit_Categorie');
+while ($row = $stmt->fetch()) {
+    $categorieProduits[$row['categorie_id']][] = $row['produit_id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -39,6 +50,21 @@ $categories = CategorieController::getAll();
                         <tr>
                             <td><?= htmlspecialchars($categorie->id) ?></td>
                             <td><?= htmlspecialchars($categorie->nom) ?></td>
+                            <td>
+                                <?php 
+                                    if (isset($categorieProduits[$categorie->id])) {
+                                        foreach ($categorieProduits[$categorie->id] as $prodId) {
+                                            foreach ($produits as $prod) {
+                                                if ($prod->id == $prodId) {
+                                                    echo '<span class="badge bg-success me-1">'.htmlspecialchars($prod->nom).'</span>';
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        echo '<span class="text-muted">Aucun produit</span>';
+                                    }
+                                ?>
+                            </td>
                             <td>
                                 <a href="edit_categorie.php?id=<?= $categorie->id ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
                                 <a href="delete_categorie.php?id=<?= $categorie->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette catégorie ?')"><i class="bi bi-trash"></i></a>
